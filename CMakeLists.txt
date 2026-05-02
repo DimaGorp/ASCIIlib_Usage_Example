@@ -1,17 +1,12 @@
 cmake_minimum_required(VERSION 3.28)
 
-add_executable(Usage main.cpp)
+option(FIND_PACKAGE_EX "find_package() Example" OFF)
+option(FETCH_CONTENT_EX "FetchContent Example" OFF)
 
-include(FetchContent)
+if(FIND_PACKAGE_EX)
+    add_subdirectory(FindPackage)
+endif()
 
-FetchContent_Declare(
-    ASCII
-    GIT_REPOSITORY https://github.com/DimaGorp/ASCIIlib.git
-    GIT_TAG origin/feature/CMake
-    GIT_SHALLOW TRUE
-    FIND_PACKAGE_ARGS
-)
-
-FetchContent_MakeAvailable(ASCII)
-
-target_link_libraries(Usage PUBLIC ASCIIlib::Core)
+if(FETCH_CONTENT_EX)
+    add_subdirectory(FetchContent)
+endif()
