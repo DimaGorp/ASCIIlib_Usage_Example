@@ -1,0 +1,49 @@
+name: Integration tests
+on:
+    push:
+        branches:
+            - master
+    workflow_call:
+        inputs:
+            branch_from_clone:
+                required: true
+                type: string
+                description: Branch to clone from
+jobs:
+    FetchContent:
+        name: Fetch Content Test
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [ ubuntu-latest, windows-latest, macos-latest ]
+        runs-on: ${{matrix.os}}
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build FetchContent example
+              run: |
+                cmake -B build -DFETCH_CONTENT_EX=ON
+                cmake --build build
+    FindPackage:
+        name: Find Package Example
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [ ubuntu-latest, windows-latest, macos-latest ]
+        runs-on: ${{matrix.os}}
+        steps:
+            - uses: actions/checkout@v4
+            - name: Clone from specific branch
+              run: |
+                git clone --branch ${{ inputs.branch_from_clone }} https://github.com/DimaGorp/DimaGorp/ASCIIlib.git
+            - name: Build and install Library
+              run: |
+                cmake -S ASCIIlib -B ASCIIlib/build
+                cmake --build ASCIIlib/build
+                cmake --install ASCIIlib/build
+            - name: Build FindPackage example
+              run: |
+                cmake -B build -DFIND_PACKAGE_EX=ON
+                cmake --build build
+
+
+
