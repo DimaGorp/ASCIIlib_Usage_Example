@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-
+project(Examples)
 option(FIND_PACKAGE_EX "find_package() Example" OFF)
 option(FETCH_CONTENT_EX "FetchContent Example" OFF)
 
