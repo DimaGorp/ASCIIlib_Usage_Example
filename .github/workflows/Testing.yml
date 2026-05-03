@@ -18,7 +18,7 @@ jobs:
             - uses: actions/checkout@v4
             - name: Build FetchContent example
               run: |
-                cmake -B build -DFETCH_CONTENT_EX=ON
+                cmake -B build -DFETCH_CONTENT_EX=ON -DBRANCH_NAME=${{ inputs.branch_from_clone }}
                 cmake --build build
     FindPackage:
         name: Find Package Example
@@ -34,7 +34,7 @@ jobs:
                 git clone --branch ${{ inputs.branch_from_clone }} https://github.com/DimaGorp/ASCIIlib.git
             - name: Build and install Library
               run: |
-                cmake -S ASCIIlib -B ASCIIlib/build -DBRANCH_NAME=${{ inputs.branch_from_clone }}
+                cmake -S ASCIIlib -B ASCIIlib/build
                 cmake --build ASCIIlib/build --config Release
                 ${{ runner.os != 'Windows' && 'sudo' || '' }} cmake --install ASCIIlib/build --config Release
             - name: Build FindPackage example
