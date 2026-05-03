@@ -16,6 +16,8 @@ jobs:
         runs-on: ${{matrix.os}}
         steps:
             - uses: actions/checkout@v4
+              with:
+                repository: DimaGorp/ASCIIlib_Usage_Example
             - name: Build FetchContent example
               run: |
                 cmake -B build -DFETCH_CONTENT_EX=ON -DBRANCH_NAME=${{ inputs.branch_from_clone }}
@@ -29,6 +31,8 @@ jobs:
         runs-on: ${{matrix.os}}
         steps:
             - uses: actions/checkout@v4
+              with:
+                repository: DimaGorp/ASCIIlib_Usage_Example
             - name: Clone from specific branch
               run: |
                 git clone --branch ${{ inputs.branch_from_clone }} https://github.com/DimaGorp/ASCIIlib.git
